@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> {% block title %}{% endblock title %} Employee Management System - Dashboard</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <!-- Inline CSS -->
+    <style>
+        body{
+            background: linear-gradient(to right, #007bff, #6a11cb);
+        }
+        .dropdown-menu {
+            position: absolute;
+            left: 0;
+            top: 100%;
+            z-index: 1000;
+            display: none;
+            float: left;
+            min-width: 10rem;
+            padding: 0.5rem 0;
+            margin: 0.125rem 0 0;
+            font-size: 1rem;
+            color:aliceblue;
+            text-align: left;
+            list-style: none;
+            background-color: #fff;
+            background-clip: padding-box;
+            border: 1px solid rgba(0, 0, 0, 0.15);
+            border-radius: 0.25rem;
+        }
+        .container1{
+            padding:200px;
+        }
+        .dropdown-menu.show {
+            display: block;
+        }
+
+        .dropdown-menu .dropdown-divider {
+            height: 0;  
+            margin: 0.5rem 0;
+            overflow: hidden;
+            border-top: 1px solid rgba(0, 0, 0, 0.15);
+        }
+
+        /* Ensure dropdown menu does not go beyond the bottom of the viewport */
+        .dropdown-menu {
+            max-height: calc(100vh - 120px);
+            overflow-y: auto;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            width: 250px;
+            background-color:#9700f5;
+            padding-top: 60px;
+            color: #fff;
+            z-index: 1000;
+            transition: transform 0.3s ease-in-out;
+            transform: translateX(-250px);
+            /* Initially hidden */
+            overflow-y: auto;
+            /* Enable scrolling for long lists */
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+            /* Add shadow for a better look */
+        }
+
+        .sidebar.active {
+            transform: translateX(0);
+        }
+
+        .logo {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .logo h2 {
+            margin: 0;
+            color: #fff;
+        }
+
+        .sidebar ul {
+            padding: 0;
+            list-style: none;
+        }
+
+        .sidebar .nav-link {
+            color: #fff;
+            padding: 10px 15px;
+            display: block;
+            transition: background-color 0.3s ease;
+        }
+
+        .sidebar .nav-link:hover {
+            background-color:#bfb3e0;
+        }
+
+        .sidebar .nav-link.active {
+            background-color: #4e5d6c;
+        }
+
+        /* Main Content Area */
+        .content {
+            margin-left: 250px;
+            padding: 20px;
+            transition: margin-left 0.3s ease;
+        }
+
+        /* Toggle Button */
+        .toggle-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 1001;
+            color: #fff;
+            background-color: #343a40;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+            /* Add shadow for a better look */
+        }
+        .heading{
+            padding-right:500px;
+            font-size: 60px;
+            font-style:italic;
+            font-weight: bold;
+            color:white;
+            font-style: oblique;
+            padding-left:100px;
+        }
+
+        .toggle-btn:hover {
+            background-color: #4e5d6c;
+        }
+
+        /* Navbar */
+        .navbar {
+            z-index: 1002;
+            /* Ensure the navbar is above the sidebar */
+        }
+
+        .webchat-container {
+            background: linear-gradient(to right, #dfe7ef);
+        }
+
+        .navbar {
+            background-color:#dfe7ef;
+            background-image: linear-gradient(to right, #dfe7ef);
+        } 
+        .main {
+        display: flex;
+        }
+
+        .container1 {
+            flex: 1;
+            margin: 10px;
+            display: flex; /* Nested flexbox to align items horizontally */
+            align-items: center; /* Center align items vertically */
+        }
+
+        .heading {
+             flex: 1; /* Take remaining space */
+             padding-right:50px;
+}
+
+.image{
+    width: 400px; /* Adjust the width as needed */
+  height: 300px; /* Adjust the height as needed */
+  border: 1px solid #ccc;
+  overflow: hidden; 
+}
+.image img2{
+    width: 100%;
+  height: 100%;
+  object-fit:contain;
+}
+    </style>
+</head>
+
+<body>
+
+    <!-- Navigation Sidebar -->
+    <div class="sidebar" id="sidebar">
+        <div class="logo">
+            <h2>EMS</h2>
+        </div>
+        <ul class="nav flex-column">
+            <li class="nav-item">
+                <a class="nav-link active" href="#">Dashboard</a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownEmployees" role="button"
+                    aria-haspopup="true" aria-expanded="false">
+                    Employees
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownEmployees">
+                    <a class="dropdown-item" href="{% url 'employee_list' %}">View All Employees</a>
+                    <a class="dropdown-item" href="{% url 'employee_form' %}">Add New Employee</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="#">Employee Reports</a>
+                </div>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownAttendance" role="button"
+                    aria-haspopup="true" aria-expanded="false">
+                    Attendance
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownAttendance">
+                    <a class="dropdown-item" href="{% url 'attendance_form' %}">Mark Attendance</a>
+                    <a class="dropdown-item" href="{% url 'attendance_list' %}">View Attendance Records</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="#">Attendance Statistics</a>
+                </div>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownLeave" role="button" aria-haspopup="true"
+                    aria-expanded="false">
+                    Leave
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownLeave">
+                    <a class="dropdown-item" href="{% url 'leave_form' %}">Apply for Leave</a>
+                    <a class="dropdown-item" href="{% url 'leave_balance' %}">View Leave Balance</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="{% url 'leave_history' %}">Leave History</a>
+                </div>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownPerformance" role="button"
+                    aria-haspopup="true" aria-expanded="false">
+                    Performance
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownPerformance">
+                    <a class="dropdown-item" href="#">Performance Reviews</a>
+                    <a class="dropdown-item" href="#">Performance Metrics</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="#">Performance Improvement Plans</a>
+                </div>
+            </li>
+            <!-- Add more navigation links here -->
+        </ul>
+    </div>
+
+    <!-- Main Content Area -->
+    <div class="content">
+        <button type="button" id="sidebarCollapse" class="toggle-btn">
+            <i class="fas fa-bars"></i>
+        </button>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container-fluid">
+                <button type="button" id="sidebarCollapseBtn" class="btn btn-info">
+                    <i class="fas fa-align-left"></i>
+                    <span>Toggle Sidebar</span>
+                </button>
+                {% if user.is_authenticated %}
+                <a href="{% url 'logout' %}" class="btn btn-primary ml-auto">Logout</a>
+                {% else %}
+                <a href="{% url 'login' %}" class="btn btn-primary ml-auto">Login</a>
+                {% endif %}
+            </div>
+        </nav>
+        <div class="container">
+            {% block content %}
+            {% endblock %}
+        </div>
+    </div>
+    <div class="main">
+        <div class="container1">
+            <div class="heading">
+                <p>Handle your WorkForce with us!!!</p>
+            </div>
+            <div class="image">
+                <img class="img2" src="https://static.vecteezy.com/system/resources/thumbnails/010/573/995/small/human-resource-recruit-and-manpower-planning-photo.jpg" alt="https://blogimages.softwaresuggest.com/blog/wp-content/uploads/2018/05/12173744/7-Employee-Management-Strategies-to-Keep-Your-Employees-Satisfied-01.png" width="400" height="300"> <!-- Adjust width and height as needed -->
+            </div>
+        </div>
+    </div>
+    
+    <!-- Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('#sidebarCollapse').on('click', function () {
+                $('#sidebar').toggleClass('active');
+                $('.content').toggleClass('active');
+            });
+
+            // Dropdown Toggle
+            $('.nav-item.dropdown').on('click', function () {
+                $(this).toggleClass('show');
+                $(this).find('.dropdown-menu').toggleClass('show');
+            });
+
+            // Close dropdowns when clicking outside
+            $(document).click(function (e) {
+                var target = e.target;
+                if (!$(target).is('.nav-item.dropdown') && !$(target).parents().is('.nav-item.dropdown')) {
+                    $('.nav-item.dropdown').removeClass('show');
+                    $('.nav-item.dropdown .dropdown-menu').removeClass('show');
+                }
+            });
+        });
+    </script>
+    <script src="https://cdn.botpress.cloud/webchat/v1/inject.js"></script>
+    <script src="https://mediafiles.botpress.cloud/50d25c0d-5ce1-4ec6-ba00-da6d848163c7/webchat/config.js" defer></script>
+    {% block body %}{% endblock body %}
+    
+    
+
+</body>
+
+
+</html>

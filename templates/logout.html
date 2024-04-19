@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Logout - Employee Management System</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Custom CSS -->
+    <style>
+        body {
+            background: linear-gradient(to right, #4e54c8, #8f94fb);
+            color: #fff;
+        }
+        .container {
+            padding-top: 100px; /* Adjust as needed */
+        }
+        .alert {
+            background-color: rgba(255, 255, 255, 0.3); /* Semi-transparent white */
+            color: #fff; /* White text */
+        }
+        .btn-primary {
+            background-color: #fff; /* White button background */
+            color: #4e54c8; /* Button text color */
+            border-color: #fff; /* White border color */
+        }
+        .btn-primary:hover {
+            background-color: #8f94fb; /* Lighter shade on hover */
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="alert alert-success" role="alert">
+                    You have successfully logged out.
+                </div>
+                <a href="{% url 'login' %}" class="btn btn-primary">Login Again</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

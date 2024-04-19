@@ -1,0 +1,117 @@
+{% extends "base.html" %}
+
+{% block body %}
+<div class="container-fluid">
+    <div class="row">
+        <!-- Sidebar -->
+        <div class="col-lg-3 col-md-4 col-sm-6 sidebar" id="sidebar">
+            <div class="logo">
+                <h2>EMS</h2>
+            </div>
+            <!-- Sidebar content goes here -->
+        </div>
+
+        <!-- Main content area -->
+        <div class="col-lg-9 col-md-8 col-sm-6 content" id="content">
+            <h1 class="heading">Employee List</h1>
+            <input type="text" id="searchInput" class="form-control mb-4" placeholder="Search...">
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th>Email</th>
+                            <th>Phone Number</th>
+                            <th>Date of Birth</th>
+                            <th>Employment Start Date</th>
+                            <th>Department</th>
+                            <th>Salary</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for employee in employees %}
+                        <tr>
+                            <td>{{ employee.first_name }}</td>
+                            <td>{{ employee.last_name }}</td>
+                            <td>{{ employee.email }}</td>
+                            <td>{{ employee.phone_number }}</td>
+                            <td>{{ employee.date_of_birth }}</td>
+                            <td>{{ employee.employment_start_date }}</td>
+                            <td>{{ employee.department }}</td>
+                            <td>{{ employee.salary }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<style>
+    .container {
+        position: absolute;
+        top: 0%;
+        left: 25%;
+        max-width: 1200px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(57, 154, 218, 0.1);
+        /* Adding a subtle shadow */
+        background-color: #f8f9fa;
+        /* Light gray background */
+        
+    }
+
+    .table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    .table th,
+    .table td {
+        
+        border: 1px solid #ddd;
+    }
+
+    .table th {
+        background-color: #007bff;
+        color: #fff;
+        text-align: left;
+    }
+
+    .table tbody tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+
+    .table tbody tr:hover {
+        background-color: #ddd;
+    }
+</style>
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // Search functionality
+        document.getElementById("searchInput").addEventListener("input", function () {
+            var input, filter, table, tr, td, i, txtValue;
+            input = this.value.toUpperCase();
+            table = document.querySelector(".table");
+            tr = table.getElementsByTagName("tr");
+            for (i = 0; i < tr.length; i++) {
+                var found = false;
+                td = tr[i].getElementsByTagName("td");
+                for (var j = 0; j < td.length; j++) {
+                    txtValue = td[j].textContent || td[j].innerText;
+                    if (txtValue.toUpperCase().indexOf(input) > -1) {
+                        found = true;
+                        break;
+                    }
+                }
+                tr[i].style.display = found ? "" : "none";
+            }
+        });
+    });
+</script>
+{% endblock body %}

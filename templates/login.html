@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+        integrity="sha512-XI3TaaqxlMCOL+UG7Z8vQz51RlE59ydJZ6yX9RfM2Gnn2aeOsILMXxmKoh+KwJ7TyLJhm4/0FQflKPeWvm+KQg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <title>Hello, world!</title>
+
+    <style>
+        body {
+            background: linear-gradient(to right, #4e54c8, #8f94fb);
+            color: #fff;
+        }
+        .container {
+            padding-top: 100px; /* Adjust as needed */
+        }
+        .card {
+            border-radius: 1rem;
+        }
+        .card-body {
+            background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent black */
+        }
+        .form-signin label,
+        .form-signin input {
+            color: #fff;
+        }
+        .form-signin input[type="text"],
+        .form-signin input[type="password"] {
+            background-color: transparent;
+            border-color: #fff;
+        }
+        .form-signin input[type="text"]:focus,
+        .form-signin input[type="password"]:focus {
+            background-color: transparent;
+            border-color: #fff;
+            box-shadow: none;
+        }
+        .form-signin .password-toggle {
+            color: #fff;
+        }
+        .btn-outline-light {
+            color: #fff;
+            border-color: #fff;
+        }
+        .btn-outline-light:hover {
+            background-color: #8f94fb; /* Lighter shade on hover */
+        }
+    </style>
+</head>
+
+<body class="text-center">
+    <section class="vh-100 gradient-custom d-flex justify-content-center align-items-center">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 mx-auto">
+                    <div class="card bg-dark text-white" style="border-radius: 1rem;">
+                        <div class="card-body p-5 text-center">
+                            <!-- change this action part whenever u need to redirect to other url  -->
+                            <form class="form-signin" method="post" action="{% url 'login' %}">
+                                {% csrf_token %}
+                                <div class="mb-md-5 mt-md-4 pb-5">
+
+                                    <h2 class="fw-bold mb-2 text-uppercase" style="font-size: 2.5rem;">Login</h2>
+                                    <p class="text-white-50 mb-5" style="font-size: 1.25rem;">Please enter your
+                                        login and
+                                        password!</p>
+
+                                    <div class="form-group">
+                                        <label for="typeEmailX" class="text-white">Username</label>
+                                        <input type="text" id="typeEmailX" name="username"
+                                            class="form-control form-control-lg"
+                                            style="background-color: transparent; color: #fff; border-color: #fff;"
+                                            placeholder="username" required autofocus />
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="typePasswordX" class="text-white">Password</label>
+                                        <input type="password" id="typePasswordX" name="password" class="form-control form-control-lg" style="background-color: transparent; color: #fff; border-color: #fff;" placeholder="Password" required />
+                                        <!-- Password visibility toggle -->
+                                        <div class="password-toggle">
+                                            <i class="fas fa-eye-slash"></i>
+                                        </div>
+                                    </div>
+
+                                    <p class="small mb-5 pb-lg-2"><a class="text-white-50" href="#!"
+                                            style="font-size: 0.875rem;">Forgot password?</a></p>
+
+                                    <button class="btn btn-outline-light btn-lg px-5" type="submit"
+                                        style="font-size: 1rem;">Login</button>
+
+                                    <div class="d-flex justify-content-center text-center mt-4 pt-1">
+                                        <a href="#!" class="text-white"><i class="fab fa-facebook-f fa-lg"></i></a>
+                                        <a href="#!" class="text-white"><i
+                                                class="fab fa-twitter fa-lg mx-4 px-2"></i></a>
+                                        <a href="#!" class="text-white"><i class="fab fa-google fa-lg"></i></a>
+                                    </div>
+
+                                </div>
+
+                                <div>
+                                    <p class="mb-0" style="font-size: 1rem;">Don't have an account? <a href="#!"
+                                            class="text-white-50 fw-bold">Sign Up</a>
+                                    </p>
+                                </div>
+
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+    <script>
+        // Toggle password visibility
+        $(document).ready(function () {
+            $('.password-toggle').on('click', function () {
+                const passwordField = $('#typePasswordX');
+                const icon = $(this).find('i');
+                if (passwordField.attr('type') === 'password') {
+                    passwordField.attr('type', 'text');
+                    icon.removeClass('fa-eye-slash');
+                    icon.addClass('fa-eye');
+                } else {
+                    passwordField.attr('type', 'password');
+                    icon.removeClass('fa-eye');
+                    icon.addClass('fa-eye-slash');
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

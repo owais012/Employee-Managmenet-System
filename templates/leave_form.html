@@ -1,0 +1,124 @@
+{% extends "base.html" %}
+
+{% block title %}Leave Form{% endblock title %}
+
+{% block body %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Apply for Leave</h3>
+                </div>
+                <div class="card-body">
+                    <form method="post" class="needs-validation" novalidate>
+                        {% csrf_token %}
+                        {% for field in form %}
+                            <div class="form-group">
+                                <label for="{{ field.id_for_label }}" class="col-form-label">{{ field.label }}</label>
+                                {% if field.name == 'start_date' or field.name == 'end_date' %}
+                                    <div class="input-group date">
+                                        <input type="text" class="form-control datepicker" id="{{ field.id_for_label }}" name="{{ field.name }}" required>
+                                        <div class="input-group-append">
+                                            <span class="input-group-text"><i class="fa fa-calendar"></i></span>
+                                        </div>
+                                        <div class="invalid-feedback">Please select a valid date.</div>
+                                    </div>
+                                {% elif field.name == 'status' %}
+                                    <select class="form-control" id="{{ field.id_for_label }}" name="{{ field.name }}" required>
+                                        <option value="">Select status</option>
+                                        <option value="accepted">Accepted</option>
+                                        <option value="pending">Pending</option>
+                                        <option value="rejected">Rejected</option>
+                                    </select>
+                                {% elif field.name == 'rejection_reason' %}
+                                    {% if form.status.value == 'rejected' %}
+                                        <div class="form-group">
+                                            <label for="{{ field.id_for_label }}" class="col-form-label">{{ field.label }}</label>
+                                            <textarea class="form-control" id="{{ field.id_for_label }}" name="{{ field.name }}" required></textarea>
+                                            <div class="invalid-feedback">Please provide a reason for rejection.</div>
+                                        </div>
+                                    {% endif %}
+                                {% else %}
+                                    {{ field }}
+                                {% endif %}
+                            </div>
+                        {% endfor %}
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap Datepicker CSS -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" rel="stylesheet">
+
+<!-- Bootstrap Datepicker JavaScript -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+
+<!-- Initialize Datepicker -->
+<script>
+    $(document).ready(function() {
+        $('.datepicker').datepicker({
+            format: 'yyyy-mm-dd',
+            autoclose: true,
+            todayHighlight: true
+        });
+    });
+
+    // Add validation styling to Bootstrap form elements
+    (function() {
+        'use strict';
+        window.addEventListener('load', function() {
+            // Fetch all the forms we want to apply custom Bootstrap validation styles to
+            var forms = document.getElementsByClassName('needs-validation');
+            // Loop over them and prevent submission
+            var validation = Array.prototype.filter.call(forms, function(form) {
+                form.addEventListener('submit', function(event) {
+                    if (form.checkValidity() === false) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                    form.classList.add('was-validated');
+                }, false);
+            });
+        }, false);
+    })();
+</script>
+
+<!-- Custom CSS -->
+<style>
+    /* Custom styles */
+    .container {
+        position: absolute;
+        top: 5%;
+        left: 25%;
+        max-width: 1200px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Adding a subtle shadow */
+    }
+
+    .card {
+        margin-top: 20px; /* Reducing margin-top for closer spacing */
+    }
+
+    .card-header {
+        background-color: #007bff;
+        color: #fff;
+        border-radius: 10px 10px 0 0; /* Rounded corners on the top */
+        padding: 15px; /* Adding padding for better spacing */
+    }
+
+    .card-title {
+        margin-bottom: 0;
+    }
+
+    .form-group {
+        margin-bottom: 15px; /* Slightly reducing margin-bottom */
+    }
+</style>
+
+
+{% endblock body %}

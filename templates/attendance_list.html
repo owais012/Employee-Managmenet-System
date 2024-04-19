@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+
+{% block body %}
+<div class="container">
+    <h1>Attendance Records for Current Year</h1>
+    <h2>Current Month: {{ current_month }}</h2> <!-- Display current month -->
+    <div class="row mb-3">
+        <div class="col-md-6">
+            <input type="text" id="searchInput" class="form-control" placeholder="Search...">
+        </div>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-striped table-bordered" id="attendance-table">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Employee</th>
+                    <th>Year</th>
+                    <th>Month</th>
+                    <th>Days Present</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for attendance in attendances %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ attendance.employee__first_name }} {{ attendance.employee__last_name }}</td>
+                    <td>{{ attendance.year }}</td>
+                    <td>{{ attendance.month }}</td>
+                    <td>{{ attendance.days_present }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Include Bootstrap CSS -->
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Include jQuery -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+<!-- Include Bootstrap JS -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<!-- Custom JavaScript for Search -->
+<script>
+    $(document).ready(function() {
+        $("#searchInput").on("keyup", function() {
+            var value = $(this).val().toLowerCase();
+            $("#attendance-table tbody tr").filter(function() {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+    });
+</script>
+
+<!-- Custom CSS -->
+<style>
+    /* Add custom styles for table */
+    .container {
+        position : absolute;
+        top : 23%;
+        left : 20%;
+        max-width: 1000px;
+        margin: auto;
+        padding: 30px;
+        border-radius: 10px;
+        background-color: azure;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    #attendance-table {
+        width: 100%;
+        margin-top: 20px;
+        border-collapse: collapse;
+    }
+
+    #attendance-table th,
+    #attendance-table td {
+        padding: 8px;
+        text-align: center;
+    }
+
+    #attendance-table th {
+        background-color: #007bff;
+        color: #fff;
+    }
+
+    #attendance-table tbody tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+
+    #attendance-table tbody tr:hover {
+        background-color: #ddd;
+    }
+</style>
+{% endblock body %}

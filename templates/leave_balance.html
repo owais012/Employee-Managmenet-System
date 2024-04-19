@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+
+{% block title %}Leave Balance{% endblock title %}
+
+
+{% block body %}
+<div class="container">
+    <h1>Leave Balance</h1>
+    <form id="leaveBalanceForm" method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            <label class="form-label" for="id_name">Name:</label>
+            <input type="text" class="form-control" id="id_name" name="name" placeholder="Enter your name">
+        </div>
+        <div class="form-group">
+            <label class="form-label" for="id_total_leave_days">Total Leave Days:</label>
+            <input type="number" class="form-control" id="id_total_leave_days" name="total_leave_days" placeholder="Enter total leave days">
+        </div>
+        <button type="submit" class="btn btn-primary">Save</button>
+    </form>
+</div>
+<style>
+    /* Add your custom CSS styles here */
+    .container {
+        position : 'absolute';
+        top: 0px;
+        left: 20px;
+        background-color: #f8f9fa; /* Light gray background color */
+        border-radius: 10px; /* Added border-radius for rounded corners */
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Added a subtle shadow */
+        max-width: 500px; /* Adjusted max-width for better responsiveness */
+    }
+    /* Customize form field alignment */
+    .form-group {
+        margin-bottom: 20px;
+    }
+    .form-label {
+        font-weight: bold;
+    }
+    /* Add more CSS styles as needed */
+</style>
+
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <!-- Additional JavaScript for form validation -->
+    <script>
+        // Validate the form before submission
+        document.getElementById('leaveBalanceForm').addEventListener('submit', function(event) {
+            const nameInput = document.getElementById('id_name');
+            const totalLeaveDaysInput = document.getElementById('id_total_leave_days');
+            
+            // Check if the name field is empty
+            if (nameInput.value.trim() === '') {
+                alert('Please enter your name.');
+                event.preventDefault(); // Prevent form submission
+                return false;
+            }
+            
+            // Check if the total leave days field is empty
+            if (totalLeaveDaysInput.value.trim() === '') {
+                alert('Please enter total leave days.');
+                event.preventDefault(); // Prevent form submission
+                return false;
+            }
+
+            // Add additional validation as needed
+
+            return true; // Allow form submission if all fields are valid
+        });
+    </script>
+{% endblock body %}

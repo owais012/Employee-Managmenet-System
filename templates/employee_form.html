@@ -1,0 +1,161 @@
+{% extends "base.html" %}
+
+{% block body %}
+    <div class="container">
+        <h1>Add New Employee</h1>
+        <form id="employeeForm" method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="id_first_name">First Name:</label>
+                {{ form.first_name }}
+            </div>
+            <div class="form-group">
+                <label for="id_last_name">Last Name:</label>
+                {{ form.last_name }}
+            </div>
+            <div class="form-group">
+                <label for="id_email">Email:</label>
+                {{ form.email }}
+            </div>
+            <div class="form-group">
+                <label for="id_phone_number">Phone Number:</label>
+                {{ form.phone_number }}
+            </div>
+            <div class="form-group">
+                <label for="id_date_of_birth">Date of Birth:</label>
+                {{ form.date_of_birth }}
+            </div>
+            <div class="form-group">
+                <label for="id_employment_start_date">Employment Start Date:</label>
+                {{ form.employment_start_date }}
+            </div>
+            <div class="form-group">
+                <label for="id_department">Department:</label>
+                {{ form.department }}
+            </div>
+            <div class="form-group">
+                <label for="id_salary">Salary:</label>
+                {{ form.salary }}
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+
+    <style>
+        /* Custom styles */
+        .container {
+            position: absolute;
+            top: 10%;
+            left: 14..%;
+            max-width: 1400px;
+
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            background-color: #76bfe4; /* Added white background color */
+        }
+    
+        .form-group {
+            margin-bottom: 20px;
+        }
+    
+        .form-control {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ced4da;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+    
+        .btn {
+            padding: 10px 20px;
+            background-color: #007bff;
+            border: none;
+            color: #fff;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+    
+        label {
+            font-weight: bold;
+        }
+    
+        input[type="text"],
+        input[type="email"],
+        input[type="date"],
+        select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+    
+        button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            border: none;
+            color: #fff;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+    
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+    
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script>
+        $(function() {
+            $("#id_date_of_birth, #id_employment_start_date").datepicker({
+                dateFormat: 'yy-mm-dd',
+                changeYear: true,
+                changeMonth: true,
+                yearRange: "-100:+0"
+            });
+
+            $('#employeeForm').submit(function(e) {
+                e.preventDefault();
+                let form = $(this);
+                $.ajax({
+                    type: form.attr('method'),
+                    url: form.attr('action'),
+                    data: form.serialize(),
+                    success: function(response) {
+                        // Handle successful form submission
+                        // For example, redirect to another page
+                        window.location.href = "{% url 'employee_list' %}";
+                    },
+                    error: function(xhr, status, error) {
+                        // Handle form submission error
+                        // Display error messages for each field
+                        let errors = JSON.parse(xhr.responseText);
+                        displayErrors(errors);
+                    }
+                });
+            });
+
+            function displayErrors(errors) {
+                // Clear existing error messages
+                $('.error-message').text('');
+
+                // Display error messages for each field
+                $.each(errors, function(field, messages) {
+                    let errorDiv = $('#' + field + '-error');
+                    errorDiv.text(messages.join(', '));
+                });
+            }
+        });
+    </script>   
+
+
+{% endblock body %}

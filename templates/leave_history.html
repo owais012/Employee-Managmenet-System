@@ -1,0 +1,132 @@
+{% extends "base.html" %}
+
+{% block title %}Leave History{% endblock title %}
+
+{% block extra_css %}
+    <!-- Link to Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Additional CSS for styling the table -->
+    <style>
+        /* Add your custom CSS styles here */
+        .container {
+            position: absolute;
+            top: 10%;
+            left: 25%;
+            max-width: 1000px;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            background-color: #76bfe4; /* Added white background color */
+        }
+
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            background-color: #fff; /* White background color for the table */
+            border-radius: 10px; /* Added border-radius for rounded corners */
+            overflow: hidden; /* Hide overflowing content */
+        }
+
+        th, td {
+            padding: 12px; /* Increased padding for better spacing */
+            border-bottom: 1px solid #ddd;
+            text-align: left;
+        }
+
+        th {
+            background-color: #007bff; /* Blue background color for table headers */
+            color: #fff; /* White text color for table headers */
+        }
+
+        .table-striped tbody tr:nth-of-type(odd) {
+            background-color: #f2f2f2; /* Light gray background color for odd rows */
+        }
+
+        .table-striped tbody tr:nth-of-type(even) {
+            background-color: #fff; /* White background color for even rows */
+        }
+
+        .table-striped tbody tr:hover {
+            background-color: #e9ecef; /* Light gray background color on hover */
+        }
+    </style>
+{% endblock extra_css %}
+
+{% block body %}
+<div class="container">
+    <h1>Leave History</h1>
+    <h2>Current Records</h2>
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Employee</th>
+                    <th>Leave Type</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                    <th>Status</th>
+                    <th>Reason</th>
+                    <th>Approved By</th>
+                    <th>Rejection Reason</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for record in current_records %}
+                    <tr>
+                        <td>{{ record.employee }}</td>
+                        <td>{{ record.leave_type }}</td>
+                        <td>{{ record.start_date }}</td>
+                        <td>{{ record.end_date }}</td>
+                        <td>{{ record.status }}</td>
+                        <td>{{ record.reason }}</td>
+                        <td>{{ record.approved_by }}</td>
+                        <td>{{ record.rejection_reason }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <h2>Historical Records</h2>
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Employee</th>
+                    <th>Leave Type</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                    <th>Status</th>
+                    <th>Reason</th>
+                    <th>Approved By</th>
+                    <th>Rejection Reason</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for record in historical_records %}
+                    <tr>
+                        <td>{{ record.employee }}</td>
+                        <td>{{ record.leave_type }}</td>
+                        <td>{{ record.start_date }}</td>
+                        <td>{{ record.end_date }}</td>
+                        <td>{{ record.status }}</td>
+                        <td>{{ record.reason }}</td>
+                        <td>{{ record.approved_by }}</td>
+                        <td>{{ record.rejection_reason }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock body %}
+
+{% block extra_js %}
+    <!-- Additional JavaScript for table sorting, filtering, etc. -->
+    <script>
+        // Add JavaScript code for table enhancements here
+        // For example, you can use libraries like DataTables.js for advanced table features
+    </script>
+{% endblock extra_js %}
